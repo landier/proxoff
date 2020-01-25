@@ -1,5 +1,13 @@
 # proxoff
+
+## How to use
+### Proxy
 ```
-export http_proxy="http://localhost:8080"
+./proxoff --port 3128
+```
+
+### Client
+```
+export http_proxy="http://localhost:3128"
 curl -L -I http://google.fr
 ```

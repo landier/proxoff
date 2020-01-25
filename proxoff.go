@@ -1,9 +1,11 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -34,18 +36,22 @@ var passthruResponseHeaderKeys = [...]string{
 }
 
 func main() {
+	port := flag.Int("port", 3128, "listening port")
+	flag.Parse()
+
 	handler := http.DefaultServeMux
 
 	handler.HandleFunc("/", handleFunc)
 
 	s := &http.Server{
-		Addr:           ":8080",
+		Addr:           ":" + strconv.Itoa(*port),
 		Handler:        handler,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 
+	fmt.Println("Proxy listening on", *port)
 	s.ListenAndServe()
 }
 
