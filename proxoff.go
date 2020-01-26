@@ -5,6 +5,7 @@ import (
 	"github.com/namsral/flag"
 	"io"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -36,9 +37,12 @@ var passthruResponseHeaderKeys = [...]string{
 }
 
 func main() {
+	homeDir, _ := os.UserHomeDir()
 	port := flag.Int("port", 3128, "listening port")
-	cachePath := flag.String("cache", "~/.proxoff/cache/", "cache path")
+	cachePath := flag.String("cache", homeDir+"/.cache/proxoff", "cache path")
 	flag.Parse()
+
+	os.MkdirAll(*cachePath, os.ModePerm)
 
 	handler := http.DefaultServeMux
 
