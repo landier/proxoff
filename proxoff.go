@@ -37,6 +37,7 @@ var passthruResponseHeaderKeys = [...]string{
 
 func main() {
 	port := flag.Int("port", 3128, "listening port")
+	cachePath := flag.String("cache", "~/.proxoff/cache/", "cache path")
 	flag.Parse()
 
 	handler := http.DefaultServeMux
@@ -52,6 +53,7 @@ func main() {
 	}
 
 	fmt.Println("Proxy listening on", *port)
+	fmt.Println("Cached files stored at", *cachePath)
 	s.ListenAndServe()
 }
 
